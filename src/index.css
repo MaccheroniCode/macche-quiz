@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+.social-link {
+	text-decoration: none;
+}
+
+.social-link > img {
+	padding: 10px;
+	height: 60px;
+}
+
+.social-link.yt > img {
+	padding: 0;
+	height: 70px;
+}
+
+.progress-circle.custom-xxxl .progress-circle__track {
+	@apply size-40;
+}
+
+.text-box-trim-end {
+	text-box-trim: trim-end;
+}

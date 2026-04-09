@@ -1,0 +1,487 @@
+name: Demo quiz
+intro: |
+  # Hello
+  This is a demo quiz.
+  
+  [@MaccheroniCode](https://www.youtube.com/@MaccheroniCode)
+questions:
+  - heading: |
+      # Which one is correct for 1?
+      ```ts
+        import { memo } from 'react';
+        import Markdown from 'react-markdown';
+        import remarkGfm from 'remark-gfm';
+
+        interface MarkdownContentProps {
+          readonly markdown: string;
+        }
+
+        const MarkdownContent = memo<MarkdownContentProps>(({ markdown }) => {
+          return (
+            <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+          );
+        });
+
+        export default MarkdownContent;
+      ```
+    multi: true
+    answers:
+      - answer: |
+          Correct 1
+          ```ts
+            import { memo } from 'react';
+            import Markdown from 'react-markdown';
+            import remarkGfm from 'remark-gfm';
+
+            interface MarkdownContentProps {
+              readonly markdown: string;
+            }
+
+            const MarkdownContent = memo<MarkdownContentProps>(({ markdown }) => {
+              return (
+                <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+              );
+            });
+
+            export default MarkdownContent;
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb
+          ```
+      - answer: |
+          Correct 2
+          ```js
+            cccc
+          ```
+        correct: true
+      - answer: |
+          Wrong 2
+          ```c++
+            dddd
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1 `macche-language-js aaaa 2`
+        correct: true
+      - answer: |
+          Wrong 1 `macche-language-js bbbb 2`
+      - answer: |
+          Wrong 2 `macche-language-js cccc 2`
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
+  - heading: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
+          Correct 1
+          ```js
+            aaaa 2
+          ```
+        correct: true
+      - answer: |
+          Wrong 1
+          ```js
+            bbbb 2
+          ```
+      - answer: |
+          Wrong 2
+          ```js
+            cccc 2
+          ```
+      - answer: |
+          Wrong 3
+          ```js
+            dddd 2
+          ```
