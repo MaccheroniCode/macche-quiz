@@ -50,7 +50,7 @@ const AnswareItem = memo<AnswareContainerProps>(({ answare, answareIndex }) => {
 const QuizQuestion = memo(() => {
 	const { currentQuestion, currentQuestionIndex } = useQuiz();
 
-	const { heading, answares = [], finalizedState } = currentQuestion ?? {};
+	const { heading, multi, answares = [], finalizedState } = currentQuestion ?? {};
 
 	let borderColor;
 	if (finalizedState === FinalizedState.CORRECT) {
@@ -64,6 +64,9 @@ const QuizQuestion = memo(() => {
 	return (
 		<Card className={classNames(['my-8 border-3', borderColor])}>
 			<MarkdownContent markdown={heading} />
+			<div className='text-sm text-cyan-500'>
+			  {multi ? "Select all the correct answers." : "Select the correct answer."}
+			</div>
 			<div className="flex flex-col gap-4 mt-4">
 				{answares.map((answare, i) => (
 					<AnswareItem key={`${currentQuestionIndex}~${i}`} answare={answare} answareIndex={i} />
