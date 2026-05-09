@@ -23,6 +23,7 @@ interface QuestionNavigatorProps {
 	readonly currentIndex: number;
 	readonly total: number;
 	readonly finalized: boolean;
+	readonly onIntro: () => void;
 	readonly onChange?: LinkProps['onChange'];
 	readonly onFinish: () => void;
 }
@@ -54,7 +55,7 @@ const getQuestionNumbers = (currentIndex: number, total: number): Array<number |
 	];
 };
 
-const QuestionNavigator = memo<QuestionNavigatorProps>(({ currentIndex, total, finalized, onChange, onFinish }) => {
+const QuestionNavigator = memo<QuestionNavigatorProps>(({ currentIndex, total, finalized, onIntro, onChange, onFinish }) => {
 	const handlePrevPress = useCallback(() => {
 		if (onChange) {
 			onChange(Math.max(1, currentIndex - 1));
@@ -71,8 +72,15 @@ const QuestionNavigator = memo<QuestionNavigatorProps>(({ currentIndex, total, f
 
 	return (
 		<div className="w-full max-w-full overflow-x-auto">
-			<Pagination className="flex flex-row justify-center">
-				<Pagination.Content>
+			<Pagination className="grid grid-flow-col grid-cols-[1fr auto 1fr] justify-center">
+				<Pagination.Content className="col-start-1 row-start-2 sm:row-start-1">
+					<Pagination.Item>
+						<Pagination.Next isDisabled={currentIndex <= 0} onPress={onIntro}>
+							<span>Intro</span>
+						</Pagination.Next>
+					</Pagination.Item>
+				</Pagination.Content>
+				<Pagination.Content className="col-start-1 col-span-3 sm:col-start-2 sm:col-span-1">
 					<Pagination.Item>
 						<Pagination.Previous isDisabled={currentIndex <= 1} onPress={handlePrevPress}>
 							<Pagination.PreviousIcon />
@@ -94,6 +102,8 @@ const QuestionNavigator = memo<QuestionNavigatorProps>(({ currentIndex, total, f
 							<Pagination.NextIcon />
 						</Pagination.Next>
 					</Pagination.Item>
+				</Pagination.Content>
+				<Pagination.Content className="col-start-3 row-start-2 sm:row-start-1">
 					<Pagination.Item>
 						<Pagination.Next isDisabled={finalized ? currentIndex > total : !isLast} onPress={onFinish}>
 							<span>{finalized ? 'Results' : 'Finish!'}</span>

@@ -3,6 +3,7 @@ import { createContext, memo, type ReactNode, useCallback, useContext, useEffect
 
 export interface Quiz {
 	readonly name: string;
+	readonly intro: string;
 	readonly questions: readonly Question[];
 }
 
@@ -37,19 +38,27 @@ export interface QuizState {
 	readonly error: null;
 }
 
+export enum QuizSection {
+	Intro,
+	Questions,
+	Results
+}
+
 export interface QuizContextType {
 	readonly id: string | null;
 	readonly name: Quiz['name'];
+	readonly intro: Quiz['intro'];
 	readonly currentQuestion: Quiz['questions'][0];
 	readonly currentQuestionIndex: number;
 	readonly totalQuestions: number;
 	readonly questions: Quiz['questions'];
 	readonly results: QuizState['results'];
-	readonly showResults: boolean;
+	readonly section: QuizSection;
 	readonly error: null;
 }
 
 export interface QuizHandlerContextType {
+	readonly showIntro: () => void;
 	readonly changeQuestion: (questionIndex: number) => void;
 	readonly toggleAnswer: (answerIndex: number) => void;
 	readonly finalize: () => void;
@@ -70,12 +79,12 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 		results,
 		error,
 	}, setState] = useState<QuizState>({
-		questionIndex: 0,
+		questionIndex: -2,
 		quiz: null,
 		results: null,
 		error: null,
 	});
-	const { name, questions = [] } = quiz ?? {};
+	const { name, intro, questions = [] } = quiz ?? {};
 
 	const load = useCallback(() => {
 		fetch(`quiz/${id}.yaml`)
@@ -86,7 +95,7 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 				setState((state) =>
 				({
 					...state,
-					questionIndex: 0,
+					questionIndex: -1,
 					quiz: data,
 				}));
 			})
@@ -100,6 +109,10 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 	}, [id]);
 
 	const handler = useMemo<QuizHandlerContextType>(() => ({
+		showIntro: () => {
+			const introIndex = -1;
+			setState((state) => ({ ...state, questionIndex: introIndex }));
+		},
 		changeQuestion: (questionIndex) => {
 			setState((state) => ({ ...state, questionIndex: questionIndex - 1 }));
 		},
@@ -185,15 +198,23 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 		},
 	}), []);
 
+	let section = QuizSection.Questions;
+	if (questionIndex == -1) {
+		section = QuizSection.Intro;
+	} else if (!!results && questionIndex >= questions?.length) {
+		section = QuizSection.Results;
+	}
+
 	const data = useMemo<QuizContextType>(() => ({
 		id: id ?? null,
 		name: name ?? '',
+		intro: intro ?? '',
 		currentQuestion: questions?.[questionIndex],
 		currentQuestionIndex: questionIndex + 1,
 		totalQuestions: questions?.length,
 		questions: [...questions ?? []],
 		results,
-		showResults: !!results && questionIndex >= questions?.length,
+		section,
 		error,
 	}), [id, name, questionIndex, questions, results, error]);
 

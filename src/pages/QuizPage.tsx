@@ -3,9 +3,21 @@ import { memo, useCallback } from 'react';
 import { useParams } from 'react-router';
 import MarkdownContent from '../components/MarkdownContent';
 import QuestionNavigator from '../components/QuestionNavigator';
-import { FinalizedState, QuizProvider, useQuiz, useQuizHandler, type Answer } from '../context/quizContext';
+import { FinalizedState, QuizProvider, useQuiz, useQuizHandler, type Answer, QuizSection } from '../context/quizContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { classNames } from '../util/ui';
+
+const QuizIntro = memo(() => {
+	const { intro } = useQuiz();
+
+	return (
+		<Card className="my-8 border-3'">
+			<div className="flex flex-col gap-4 mt-4">
+				<MarkdownContent markdown={intro} />
+			</div>
+		</Card>
+	);
+});
 
 interface AnswerContainerProps {
 	readonly answer: Answer;
@@ -65,7 +77,7 @@ const QuizQuestion = memo(() => {
 		<Card className={classNames(['my-8 border-3', borderColor])}>
 			<MarkdownContent markdown={heading} />
 			<div className='text-sm text-cyan-500'>
-			  {multi ? "Select all the correct answers." : "Select the correct answer."}
+				{multi ? "Select all the correct answers." : "Select the correct answer."}
 			</div>
 			<div className="flex flex-col gap-4 mt-4">
 				{answers.map((answer, i) => (
@@ -100,12 +112,22 @@ const QuizResults = memo(() => {
 	);
 });
 
+const SECTIONS = {
+	[QuizSection.Intro]: QuizIntro,
+	[QuizSection.Questions]: QuizQuestion,
+	[QuizSection.Results]: QuizResults,
+} as const;
+
 const QuizPageContainer = memo(() => {
-	const { name, currentQuestionIndex, totalQuestions, showResults, results } = useQuiz();
+	const { name, currentQuestionIndex, totalQuestions, section, results } = useQuiz();
 
 	usePageTitle(name || 'Loading quiz...');
 
-	const { changeQuestion, finalize } = useQuizHandler();
+	const { showIntro, changeQuestion, finalize } = useQuizHandler();
+
+	const handleIntroPress = useCallback(() => {
+		showIntro();
+	}, [showIntro]);
 
 	const handleQuestionChange = useCallback((questionIndex: number) => {
 		changeQuestion(questionIndex);
@@ -115,17 +137,17 @@ const QuizPageContainer = memo(() => {
 		finalize();
 	}, [finalize]);
 
+	const Content = SECTIONS[section];
+
 	return (
 		<div className="mx-2 sm:container sm:mx-auto mt-2">
 			<div className="text-3xl text-center">{name}</div>
-			{showResults
-				? <QuizResults />
-				: <QuizQuestion />
-			}
+			<Content />
 			<QuestionNavigator
 				currentIndex={currentQuestionIndex}
 				total={totalQuestions}
 				finalized={!!results}
+				onIntro={handleIntroPress}
 				onChange={handleQuestionChange}
 				onFinish={handleFinishPress}
 			/>
