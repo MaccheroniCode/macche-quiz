@@ -3,25 +3,25 @@ import { memo, useCallback } from 'react';
 import { useParams } from 'react-router';
 import MarkdownContent from '../components/MarkdownContent';
 import QuestionNavigator from '../components/QuestionNavigator';
-import { FinalizedState, QuizProvider, useQuiz, useQuizHandler, type Answare } from '../context/quizContext';
+import { FinalizedState, QuizProvider, useQuiz, useQuizHandler, type Answer } from '../context/quizContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { classNames } from '../util/ui';
 
-interface AnswareContainerProps {
-	readonly answare: Answare;
-	readonly answareIndex: number;
+interface AnswerContainerProps {
+	readonly answer: Answer;
+	readonly answerIndex: number;
 }
 
-const AnswareItem = memo<AnswareContainerProps>(({ answare, answareIndex }) => {
-	const { answare: answareMarkdown, selected, correct } = answare ?? {};
+const AnswerItem = memo<AnswerContainerProps>(({ answer, answerIndex }) => {
+	const { answer: answerMarkdown, selected, correct } = answer ?? {};
 
 	const { results } = useQuiz();
 
-	const { toggleAnsware } = useQuizHandler();
+	const { toggleAnswer } = useQuizHandler();
 
 	const handleChange = useCallback(() => {
-		toggleAnsware(answareIndex);
-	}, [toggleAnsware, answareIndex]);
+		toggleAnswer(answerIndex);
+	}, [toggleAnswer, answerIndex]);
 
 	let background = 'bg-surface-secondary';
 	if (results) {
@@ -34,14 +34,14 @@ const AnswareItem = memo<AnswareContainerProps>(({ answare, answareIndex }) => {
 
 	return (
 		<Checkbox
-			value={`${answareIndex}`}
+			value={`${answerIndex}`}
 			variant="primary"
 			className={`rounded-3xl px-5 py-4 transition-all border-3 data-[selected=true]:border-accent/80 ${background}`}
 			isSelected={selected}
 			onChange={results ? undefined : handleChange}
 		>
 			<Checkbox.Content className="block w-full">
-				<MarkdownContent markdown={answareMarkdown} />
+				<MarkdownContent markdown={answerMarkdown} />
 			</Checkbox.Content>
 		</Checkbox>
 	);
@@ -50,7 +50,7 @@ const AnswareItem = memo<AnswareContainerProps>(({ answare, answareIndex }) => {
 const QuizQuestion = memo(() => {
 	const { currentQuestion, currentQuestionIndex } = useQuiz();
 
-	const { heading, multi, answares = [], finalizedState } = currentQuestion ?? {};
+	const { heading, multi, answers = [], finalizedState } = currentQuestion ?? {};
 
 	let borderColor;
 	if (finalizedState === FinalizedState.CORRECT) {
@@ -68,8 +68,8 @@ const QuizQuestion = memo(() => {
 			  {multi ? "Select all the correct answers." : "Select the correct answer."}
 			</div>
 			<div className="flex flex-col gap-4 mt-4">
-				{answares.map((answare, i) => (
-					<AnswareItem key={`${currentQuestionIndex}~${i}`} answare={answare} answareIndex={i} />
+				{answers.map((answer, i) => (
+					<AnswerItem key={`${currentQuestionIndex}~${i}`} answer={answer} answerIndex={i} />
 				))}
 			</div>
 		</Card>

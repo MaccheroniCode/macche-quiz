@@ -16,12 +16,12 @@ export enum FinalizedState {
 export interface Question {
 	readonly heading: string;
 	readonly multi?: boolean;
-	readonly answares: readonly Answare[];
+	readonly answers: readonly Answer[];
 	readonly finalizedState?: FinalizedState;
 }
 
-export interface Answare {
-	readonly answare: string;
+export interface Answer {
+	readonly answer: string;
 	readonly correct?: boolean;
 	readonly selected?: boolean;
 }
@@ -51,7 +51,7 @@ export interface QuizContextType {
 
 export interface QuizHandlerContextType {
 	readonly changeQuestion: (questionIndex: number) => void;
-	readonly toggleAnsware: (answareIndex: number) => void;
+	readonly toggleAnswer: (answerIndex: number) => void;
 	readonly finalize: () => void;
 }
 
@@ -103,7 +103,7 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 		changeQuestion: (questionIndex) => {
 			setState((state) => ({ ...state, questionIndex: questionIndex - 1 }));
 		},
-		toggleAnsware: (answareIndex) => {
+		toggleAnswer: (answerIndex) => {
 			setState((state) => {
 				const { quiz, questionIndex } = state;
 				if (!quiz) {
@@ -118,24 +118,24 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 							if (qi !== questionIndex) {
 								return question;
 							}
-							let { answares } = question;
-							if (question.multi || answares[answareIndex].selected) {
-								answares = answares.map((answare, ai) => {
-									if (ai !== answareIndex) {
-										return answare;
+							let { answers } = question;
+							if (question.multi || answers[answerIndex].selected) {
+								answers = answers.map((answer, ai) => {
+									if (ai !== answerIndex) {
+										return answer;
 									}
-									return { ...answare, selected: !answare.selected };
+									return { ...answer, selected: !answer.selected };
 								});
 							} else {
-								answares = answares.map((answare, ai) => {
-									const selected = ai === answareIndex;
-									if (selected === answare.selected) {
-										return answare;
+								answers = answers.map((answer, ai) => {
+									const selected = ai === answerIndex;
+									if (selected === answer.selected) {
+										return answer;
 									}
-									return { ...answare, selected };
+									return { ...answer, selected };
 								});
 							}
-							return { ...question, answares };
+							return { ...question, answers };
 						}),
 					}
 				});
@@ -160,12 +160,12 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 				let correctNumber = 0;
 
 				const questions = quiz.questions.map((question) => {
-					const { answares, multi } = question;
+					const { answers, multi } = question;
 					let finalizedState = FinalizedState.PARTIAL;
-					if (answares.every(a => !!a.correct === !!a.selected)) {
+					if (answers.every(a => !!a.correct === !!a.selected)) {
 						finalizedState = FinalizedState.CORRECT;
 						correctNumber++;
-					} else if (!multi || answares.every(a => !!a.correct !== !!a.selected)) {
+					} else if (!multi || answers.every(a => !!a.correct !== !!a.selected)) {
 						finalizedState = FinalizedState.WRONG;
 					}
 					return { ...question, finalizedState };

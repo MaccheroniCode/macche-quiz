@@ -1,7 +1,7 @@
 name: Demo quiz
 questions:
   - heading: |
-      # Wich one is correct for 1?
+      # Which one is correct for 1?
       ```ts
         import { memo } from 'react';
         import Markdown from 'react-markdown';
@@ -20,8 +20,8 @@ questions:
         export default MarkdownContent;
       ```
     multi: true
-    answares:
-      - answare: |
+    answers:
+      - answer: |
           Correct 1
           ```ts
             import { memo } from 'react';
@@ -41,42 +41,42 @@ questions:
             export default MarkdownContent;
           ```
         correct: true
-      - answare: |
+      - answer: |
           Wrong 1
           ```js
             bbbb
           ```
-      - answare: |
+      - answer: |
           Correct 2
           ```js
             cccc
           ```
         correct: true
-      - answare: |
+      - answer: |
           Wrong 2
           ```js
             dddd
           ```
   - heading: |
-      # Wich one is correct for 2?
-    answares:
-      - answare: |
+      # Which one is correct for 2?
+    answers:
+      - answer: |
           Correct 1
           ```js
             aaaa 2
           ```
         correct: true
-      - answare: |
+      - answer: |
           Wrong 1
           ```js
             bbbb 2
           ```
-      - answare: |
+      - answer: |
           Wrong 2
           ```js
             cccc 2
           ```
-      - answare: |
+      - answer: |
           Wrong 3
           ```js
             dddd 2
