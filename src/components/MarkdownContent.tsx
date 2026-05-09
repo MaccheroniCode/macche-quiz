@@ -8,17 +8,31 @@ import remarkGfm from 'remark-gfm';
 const COMPONENTS: Components = {
 	code: (props) => {
 		const { children, className, node, ...rest } = props;
-		const match = /language-(\w+)/.exec(className || '');
-		if (match) {
-			return (
-				<SyntaxHighlighter
-					PreTag="div"
-					children={String(children).replace(/\n$/, '')}
-					language={match[1]}
-					style={vscDarkPlus}
-					showLineNumbers
-				/>
-			);
+		if (className) {
+			const match = /language-([\w\+]+)/.exec(className || '');
+			if (match) {
+				return (
+					<SyntaxHighlighter
+						PreTag="div"
+						children={String(children).replace(/\n$/, '')}
+						language={match[1]}
+						style={vscDarkPlus}
+						showLineNumbers
+					/>
+				);
+			}
+		} else {
+			const match = /language-([\w\+]+) ((?!\n).*)/.exec(String(children));
+			if (match) {
+            	return (
+					<SyntaxHighlighter
+						PreTag="span"
+						children={match[2]}
+						language={match[1]}
+						style={vscDarkPlus}
+					/>
+				);
+			}
 		}
 		return (
 			<Kbd {...rest} className={className}>
