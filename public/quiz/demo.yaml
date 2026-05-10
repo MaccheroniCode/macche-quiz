@@ -57,28 +57,19 @@ questions:
         correct: true
       - answer: |
           Wrong 2
-          ```js
+          ```c++
             dddd
           ```
   - heading: |
       # Which one is correct for 2?
     answers:
       - answer: |
-          Correct 1
-          ```js
-            aaaa 2
-          ```
+          Correct 1 `macche-language-js aaaa 2`
         correct: true
       - answer: |
-          Wrong 1
-          ```js
-            bbbb 2
-          ```
+          Wrong 1 `macche-language-js bbbb 2`
       - answer: |
-          Wrong 2
-          ```js
-            cccc 2
-          ```
+          Wrong 2 `macche-language-js cccc 2`
       - answer: |
           Wrong 3
           ```js
