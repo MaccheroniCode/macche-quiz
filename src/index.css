@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 
-.social-link {
-	text-decoration: none;
-}
-
 .social-link > img {
 	padding: 10px;
 	height: 60px;

@@ -64,18 +64,21 @@ const IndexPage = memo(() => {
 	usePageTitle('');
 
 	return (
-		<div className="mx-2 sm:container sm:mx-auto justify-center mt-2">
+		<div className="mx-2 sm:container sm:mx-auto justify-items-center mt-2">
 			<div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-6 gap-4 my-5">
 				<img className="md:col-span-2 md:col-start-2 xl:col-start-3" src="logo.png" />
 			</div>
 			<h1 className="text-4xl text-center">{APP_TITLE}</h1>
 			<Quizzes />
-			<div className="flex items-center justify-center mt-20">
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center items-center mt-20">
 				<a className="social-link yt" href="https://www.youtube.com/@MaccheroniCode" target="_blank">
 					<img src="social/yt_logo_fullcolor_white_digital.png" alt="YouTube" title="YouTube" />
 				</a>
 				<a className="social-link" href="https://open.spotify.com/show/2kkWrwjHTEousBZ3MT1izR" target="_blank">
 					<img src="social/Spotify_Full_Logo_Green.svg" alt="Spotify" title="Spotify" />
+				</a>
+				<a className="social-link" href="https://github.com/MaccheroniCode/macche-quiz" target="_blank">
+					<img src="social/GitHub_Lockup_White.svg" alt="GitHub" title="GitHub" />
 				</a>
 			</div>
 		</div>
