@@ -34,21 +34,23 @@ const AnswerItem = memo<AnswerContainerProps>(({ answer, answerIndex }) => {
 		toggleAnswer(answerIndex);
 	}, [toggleAnswer, answerIndex]);
 
-	let background = 'bg-surface-secondary';
+	let style = 'bg-surface-secondary';
 	if (results) {
 		if (correct) {
-			background = 'bg-green-800';
+			style = 'bg-green-800';
 		} else if (selected) {
-			background = 'bg-red-800';
+			style = 'bg-red-800';
 		}
+		style += ' cursor-default';
 	}
 
 	return (
 		<Checkbox
 			value={`${answerIndex}`}
 			variant="primary"
-			className={`rounded-3xl px-5 py-4 transition-all border-3 data-[selected=true]:border-accent/80 ${background}`}
-			isSelected={selected}
+			className={`rounded-3xl px-5 py-4 transition-all border-3 data-[selected=true]:border-accent/80 ${style}`}
+			isReadOnly={!!results}
+			isSelected={selected ?? false}
 			onChange={results ? undefined : handleChange}
 		>
 			<Checkbox.Content className="block w-full">

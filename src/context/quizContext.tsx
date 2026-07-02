@@ -121,8 +121,8 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 		},
 		toggleAnswer: (answerIndex) => {
 			setState((state) => {
-				const { quiz, questionIndex } = state;
-				if (!quiz) {
+				const { quiz, questionIndex, results } = state;
+				if (!quiz || !!results) {
 					return state;
 				}
 
