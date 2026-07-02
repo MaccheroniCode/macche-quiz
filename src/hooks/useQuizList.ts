@@ -22,7 +22,12 @@ export const useQuizList = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			fetch('quiz/list.yaml')
-				.then(response => response.blob())
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+					}
+					return response.blob();
+				})
 				.then(blob => blob.text())
 				.then(text => yaml.load(text) as QuizList)
 				.then(data => {

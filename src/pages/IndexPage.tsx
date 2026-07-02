@@ -1,9 +1,10 @@
-import { Alert, Button, Spinner } from '@heroui/react';
+import { Alert, Button } from '@heroui/react';
 import { memo, useCallback } from 'react';
 import { Link } from 'react-router';
 import { APP_TITLE } from '../config/config';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useQuizList } from '../hooks/useQuizList';
+import Loader from '../components/Loader';
 
 const Quizzes = memo(() => {
 	const { loading, data: { quizzes } = {}, error } = useQuizList();
@@ -14,10 +15,7 @@ const Quizzes = memo(() => {
 
 	if (loading) {
 		return (
-			<div className="flex flex-col items-center mt-5">
-				<div className="mb-5">Looking in the fridge for the quizzes' ingredients O_O</div>
-				<Spinner size="xl" />
-			</div>
+			<Loader className="mt-5" />
 		);
 	}
 

@@ -5,6 +5,7 @@ import MarkdownContent from '../components/MarkdownContent';
 import QuestionNavigator from '../components/QuestionNavigator';
 import { FinalizedState, QuizProvider, QuizSection, useQuiz, useQuizHandler, type Answer } from '../context/quizContext';
 import { usePageTitle } from '../hooks/usePageTitle';
+import Loader from '../components/Loader';
 
 const QuizIntro = memo(() => {
 	const { intro } = useQuiz();
@@ -122,7 +123,7 @@ const SECTIONS = {
 	[QuizSection.Results]: QuizResults,
 } as const;
 
-const QuizPageContainer = memo(() => {
+const QuizPageContent = memo(() => {
 	const { name, currentQuestionIndex, totalQuestions, section, results } = useQuiz();
 
 	usePageTitle(name || 'Loading quiz...');
@@ -143,19 +144,44 @@ const QuizPageContainer = memo(() => {
 
 	const Content = SECTIONS[section];
 
+	return <>
+		<div className="text-3xl text-center">{name}</div>
+		<Content />
+		<QuestionNavigator
+			currentIndex={currentQuestionIndex}
+			total={totalQuestions}
+			finalized={!!results}
+			onIntro={handleIntroPress}
+			onChange={handleQuestionChange}
+			onFinish={handleFinishPress}
+		/>
+	</>;
+});
+
+const QuizPageDispatcher = memo(() => {
+	const { loading, error } = useQuiz();
+
+	if (loading) {
+		return (
+			<Loader className="mt-5" />
+		);
+	}
+
+	if (error) {
+		return <>
+			<div className="text-4xl text-center text-red-600">Oh ho! Macche...happened?</div>
+			<div className="text-3xl text-center text-red-700">Something went wrong!</div>
+			<div className="text-2xl text-center text-red-800">A maccherone is escaped!</div>
+			{error?.message && (
+				<div className="mt-10">
+					<MarkdownContent markdown={'```text\r\n' + error?.message + '\r\n```'} />
+				</div>
+			)}
+		</>;
+	}
+
 	return (
-		<div className="mx-2 sm:container sm:mx-auto mt-2">
-			<div className="text-3xl text-center">{name}</div>
-			<Content />
-			<QuestionNavigator
-				currentIndex={currentQuestionIndex}
-				total={totalQuestions}
-				finalized={!!results}
-				onIntro={handleIntroPress}
-				onChange={handleQuestionChange}
-				onFinish={handleFinishPress}
-			/>
-		</div>
+		<QuizPageContent />
 	);
 });
 
@@ -164,7 +190,9 @@ const QuizPage = memo(() => {
 
 	return (
 		<QuizProvider id={id}>
-			<QuizPageContainer />
+			<div className="mx-2 sm:container sm:mx-auto mt-2">
+				<QuizPageDispatcher />
+			</div>
 		</QuizProvider>
 	);
 });

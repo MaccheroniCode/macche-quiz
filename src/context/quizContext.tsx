@@ -32,10 +32,11 @@ export interface Results {
 }
 
 export interface QuizState {
+	readonly loading: boolean;
 	readonly questionIndex: number;
 	readonly quiz: Quiz | null;
 	readonly results: Results | null;
-	readonly error: null;
+	readonly error: Error | null;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -47,6 +48,7 @@ export enum QuizSection {
 
 export interface QuizContextType {
 	readonly id: string | null;
+	readonly loading: QuizState['loading'];
 	readonly name: Quiz['name'];
 	readonly intro: Quiz['intro'];
 	readonly currentQuestion: Quiz['questions'][0];
@@ -55,7 +57,7 @@ export interface QuizContextType {
 	readonly questions: Quiz['questions'];
 	readonly results: QuizState['results'];
 	readonly section: QuizSection;
-	readonly error: null;
+	readonly error: QuizState['error'];
 }
 
 export interface QuizHandlerContextType {
@@ -75,11 +77,13 @@ const QuizHandlerContext = createContext<QuizHandlerContextType | undefined>(und
 
 export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 	const [{
+		loading,
 		questionIndex,
 		quiz,
 		results,
 		error,
 	}, setState] = useState<QuizState>({
+		loading: true,
 		questionIndex: -2,
 		quiz: null,
 		results: null,
@@ -89,20 +93,32 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 
 	const load = useCallback(() => {
 		fetch(`quiz/${id}.yaml`)
-			.then(response => response.blob())
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+				}
+				return response.blob();
+			})
 			.then(blob => blob.text())
 			.then(text => yaml.load(text) as Quiz)
 			.then(data => {
 				setState((state) =>
 				({
 					...state,
+					loading: false,
 					questionIndex: -1,
 					quiz: data,
 					results: null,
 					error: null,
 				}));
 			})
-			.catch(err => console.log('err:', err));
+			.catch(err => {
+				setState((state) => ({
+					...state,
+					loading: false,
+					error: err,
+				}));
+			});
 	}, [id]);
 
 	useEffect(() => {
@@ -210,6 +226,7 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 
 	const data = useMemo<QuizContextType>(() => ({
 		id: id ?? null,
+		loading,
 		name: name ?? '',
 		intro: intro ?? '',
 		currentQuestion: questions?.[questionIndex],
@@ -219,7 +236,7 @@ export const QuizProvider = memo<QuizProviderProps>(({ id, children }) => {
 		results,
 		section,
 		error,
-	}), [id, name, questionIndex, questions, results, error]);
+	}), [id, loading, name, questionIndex, questions, results, error]);
 
 	return (
 		<QuizHandlerContext.Provider value={handler}>
