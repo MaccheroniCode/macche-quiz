@@ -68,12 +68,9 @@ const IndexPage = memo(() => {
 			</div>
 			<h1 className="text-4xl text-center">{APP_TITLE}</h1>
 			<Quizzes />
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center items-center mt-20">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center items-center mt-20">
 				<a className="social-link yt" href="https://www.youtube.com/@MaccheroniCode" target="_blank">
 					<img src="social/yt_logo_fullcolor_white_digital.png" alt="YouTube" title="YouTube" />
-				</a>
-				<a className="social-link" href="https://open.spotify.com/show/2kkWrwjHTEousBZ3MT1izR" target="_blank">
-					<img src="social/Spotify_Full_Logo_Green.svg" alt="Spotify" title="Spotify" />
 				</a>
 				<a className="social-link" href="https://github.com/MaccheroniCode/macche-quiz" target="_blank">
 					<img src="social/GitHub_Lockup_White.svg" alt="GitHub" title="GitHub" />
